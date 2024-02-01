@@ -1,0 +1,14 @@
+{
+  "name": "restifyapigenerate",
+  "version": "1.0.0",
+  "description": "Automatically generate OpenApi documentation for your restify API",
+  "main": "restifyOpenapiGenerator.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "NickOvt",
+  "license": "MIT",
+  "dependencies": {
+    "joi": "17.11.0"
+  }
+}
