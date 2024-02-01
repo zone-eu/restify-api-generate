@@ -6,9 +6,21 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": ["OpenApi", "Documentation", "Restify"],
   "author": "NickOvt",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zone-eu/restify-api-generate.git"
+  },
   "dependencies": {
     "joi": "17.11.0"
-  }
+  },
+  "devDependencies": {
+    "eslint": "8.56.0",
+    "eslint-config-prettier": "9.1.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+}
 }
