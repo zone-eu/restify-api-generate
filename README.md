@@ -7,3 +7,4 @@ specified options.
 ### License
 
 restifyApiGenerate is currently licensed under the MIT license.
+specified options.
