@@ -6,7 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["OpenApi", "Documentation", "Restify"],
+  "keywords": [
+    "OpenApi",
+    "Documentation",
+    "Restify"
+  ],
   "author": "NickOvt",
   "license": "MIT",
   "repository": {
@@ -22,5 +26,5 @@
   },
   "engines": {
     "node": ">=16.0.0"
-}
+  }
 }
