@@ -1,6 +1,6 @@
 {
   "name": "restifyapigenerate",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Automatically generate OpenApi documentation for your restify API",
   "main": "restifyOpenapiGenerator.js",
   "scripts": {
