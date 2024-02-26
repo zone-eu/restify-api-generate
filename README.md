@@ -5,5 +5,4 @@ that generates an OpenApi spec .json file to the specified path and with
 specified options.
 
 ### License
-
 restifyApiGenerate is currently licensed under the MIT license.
