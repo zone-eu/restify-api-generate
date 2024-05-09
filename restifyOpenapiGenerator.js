@@ -233,7 +233,7 @@ class RestifyApiGenerate {
             const route = routes[routePath];
             const { spec } = route;
 
-            if (spec.exclude) {
+            if (spec.excludeRoute) {
                 continue;
             }
 
