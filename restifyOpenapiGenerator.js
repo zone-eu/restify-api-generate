@@ -97,8 +97,7 @@ class RestifyApiGenerate {
             const data = {
                 type: joiObject.type,
                 description: joiObject._flags.description,
-                properties: {},
-                required: []
+                properties: {}
             };
 
             if (joiObject._flags.objectName) {
@@ -115,6 +114,9 @@ class RestifyApiGenerate {
 
             for (const [key, value] of fieldsMap) {
                 if (value.schema._flags.presence === 'required') {
+                    if (!data.required) {
+                        data.required = [];
+                    }
                     data.required.push(key);
                 }
                 this.parseJoiObject(key, value.schema, data.properties);
@@ -157,7 +159,6 @@ class RestifyApiGenerate {
             this.parseJoiObject(null, elems[0], data);
         } else {
             const openApiType = joiTypeToOpenApiTypeMap[joiObject.type]; // even if type is object here then ignore and do not go recursive
-            const isRequired = joiObject._flags.presence === 'required';
             const description = joiObject._flags.description;
             let format = undefined;
 
@@ -170,7 +171,7 @@ class RestifyApiGenerate {
                 format = joiObject.type;
             }
 
-            const data = { type: openApiType, description, required: isRequired };
+            const data = { type: openApiType, description };
             if (format) {
                 data.format = format;
 
@@ -233,6 +234,9 @@ class RestifyApiGenerate {
             const route = routes[routePath];
             const { spec } = route;
 
+            // Turn `/users/:userId` into `/users/{userId}`
+            spec.path = spec.path.replace(/\/:([^/]+)/g, '/{$1}');
+
             if (spec.excludeRoute) {
                 continue;
             }
@@ -282,7 +286,14 @@ class RestifyApiGenerate {
                 obj.in = 'path';
                 obj.description = paramKeyData._flags.description;
                 obj.required = paramKeyData._flags.presence === 'required';
-                obj.schema = { type: paramKeyData.type };
+
+                const parsedJoi = {};
+                this.parseJoiObject(null, paramKeyData, parsedJoi);
+                const { type, format, example, oneOf } = parsedJoi.items || {};
+
+                obj.example = example;
+                obj.schema = { type, format, oneOf };
+
                 operationObj.parameters.push(obj);
             }
 
@@ -294,7 +305,13 @@ class RestifyApiGenerate {
                 obj.in = 'query';
                 obj.description = paramKeyData._flags.description;
                 obj.required = paramKeyData._flags.presence === 'required';
-                obj.schema = { type: paramKeyData.type };
+
+                const parsedJoi = {};
+                this.parseJoiObject(null, paramKeyData, parsedJoi);
+                const { type, format, example, oneOf } = parsedJoi.items || {};
+
+                obj.example = example;
+                obj.schema = { type, format, oneOf };
 
                 // enum check
                 if (paramKeyData._valids) {
@@ -384,7 +401,7 @@ class RestifyApiGenerate {
             security: options.security
         };
 
-        await fs.promises.writeFile(this.dirname + options.docsPath || '/openapidocs.json', JSON.stringify(docs));
+        await fs.promises.writeFile(this.dirname + options.docsPath || '/openapidocs.json', JSON.stringify(docs, undefined, 4));
     }
 
     restifyApiGenerate(ctx, options) {
