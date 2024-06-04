@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/zone-eu/restify-api-generate/compare/v1.2.1...v1.2.2) (2024-06-04)
+
+
+### Bug Fixes
+
+* **api-generate:** Various fixes to make openapi spec valid ([#15](https://github.com/zone-eu/restify-api-generate/issues/15)) ([b338619](https://github.com/zone-eu/restify-api-generate/commit/b338619ca7875b8909bdaf89d3929e83693d9029))
+
 ## [1.2.1](https://github.com/zone-eu/restify-api-generate/compare/v1.2.0...v1.2.1) (2024-05-09)
 
 
