@@ -228,6 +228,9 @@ class RestifyApiGenerate {
             ]
         };
 
+        // get package version
+        docs.info.version = docs.info.version || require(path.join(this.dirname, 'package.json')).version || '1.0.0'; // use provided version first, if missing means use package.json version, otherwise default to first version 1.0.0
+
         const mapPathToMethods = {}; // map -> {path -> {post -> {}, put -> {}, delete -> {}, get -> {}}}
 
         for (const routePath in routes) {
