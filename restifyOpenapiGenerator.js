@@ -1,6 +1,7 @@
 'use strict';
 
 const fs = require('fs');
+const path = require('path');
 
 const structuredCloneWrapper = typeof structuredClone === 'function' ? structuredClone : obj => JSON.parse(JSON.stringify(obj));
 
