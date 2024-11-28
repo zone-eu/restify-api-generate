@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.3](https://github.com/zone-eu/restify-api-generate/compare/v1.2.2...v1.2.3) (2024-11-28)
+
+
+### Bug Fixes
+
+* **deps:** add path module. RA-1-4 ([#19](https://github.com/zone-eu/restify-api-generate/issues/19)) ([46d259b](https://github.com/zone-eu/restify-api-generate/commit/46d259b3e3c7db4f9be7253e9900111919b4610e))
+
 ## [1.2.2](https://github.com/zone-eu/restify-api-generate/compare/v1.2.1...v1.2.2) (2024-09-05)
 
 
