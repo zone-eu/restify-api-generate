@@ -199,6 +199,11 @@ class RestifyApiGenerate {
                 data.example = example;
             }
 
+            // Default value for requestBody property
+            if (joiObject._flags?.default !== undefined) {
+                data.default = joiObject._flags.default;
+            }
+
             if (path) {
                 requestBodyProperties[path] = data;
             } else if (Array.isArray(requestBodyProperties)) {
@@ -282,14 +287,18 @@ class RestifyApiGenerate {
 
             // 6) add parameters (queryParams and pathParams).
             operationObj.parameters = [];
+
             for (const paramKey in spec.validationObjs?.pathParams) {
                 const paramKeyData = spec.validationObjs.pathParams[paramKey];
 
                 const obj = {};
                 obj.name = paramKey;
                 obj.in = 'path';
-                obj.description = paramKeyData._flags.description;
-                obj.required = paramKeyData._flags.presence === 'required';
+
+                const { description, presence, default: defaultValue } = paramKeyData._flags;
+
+                obj.description = description;
+                obj.required = presence === 'required';
 
                 const parsedJoi = {};
                 this.parseJoiObject(null, paramKeyData, parsedJoi);
@@ -297,6 +306,25 @@ class RestifyApiGenerate {
 
                 obj.example = example;
                 obj.schema = { type, format, oneOf };
+                obj.schema.default = defaultValue;
+
+                // enum check
+                if (paramKeyData._valids) {
+                    const enumValues = [];
+                    for (const validEnumValue of paramKeyData._valids._values) {
+                        enumValues.push(validEnumValue);
+                    }
+                    if (enumValues.length > 0) {
+                        obj.schema.enum = enumValues;
+                    }
+                }
+
+                // example check
+                if (paramKeyData.$_terms && paramKeyData.$_terms.examples && paramKeyData.$_terms.examples.length > 0) {
+                    const example = paramKeyData.$_terms.examples[0];
+
+                    obj.schema.example = example;
+                }
 
                 operationObj.parameters.push(obj);
             }
@@ -307,8 +335,11 @@ class RestifyApiGenerate {
                 const obj = {};
                 obj.name = paramKey;
                 obj.in = 'query';
-                obj.description = paramKeyData._flags.description;
-                obj.required = paramKeyData._flags.presence === 'required';
+
+                const { description, presence, default: defaultValue } = paramKeyData._flags;
+
+                obj.description = description;
+                obj.required = presence === 'required';
 
                 const parsedJoi = {};
                 this.parseJoiObject(null, paramKeyData, parsedJoi);
@@ -316,6 +347,7 @@ class RestifyApiGenerate {
 
                 obj.example = example;
                 obj.schema = { type, format, oneOf };
+                obj.schema.default = defaultValue;
 
                 // enum check
                 if (paramKeyData._valids) {
