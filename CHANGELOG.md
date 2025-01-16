@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.4](https://github.com/zone-eu/restify-api-generate/compare/v1.2.3...v1.2.4) (2025-01-16)
+
+
+### Bug Fixes
+
+* **defaults-examples-for-openapi:** RA-1-5 ([#21](https://github.com/zone-eu/restify-api-generate/issues/21)) ([9409acd](https://github.com/zone-eu/restify-api-generate/commit/9409acdf807eb60723069859e7b34410aad3578b))
+
 ## [1.2.3](https://github.com/zone-eu/restify-api-generate/compare/v1.2.2...v1.2.3) (2024-11-28)
 
 
