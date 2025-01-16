@@ -199,6 +199,11 @@ class RestifyApiGenerate {
                 data.example = example;
             }
 
+            // Default value for requestBody property
+            if (joiObject._flags?.default !== undefined) {
+                data.default = joiObject._flags.default;
+            }
+
             if (path) {
                 requestBodyProperties[path] = data;
             } else if (Array.isArray(requestBodyProperties)) {
@@ -282,6 +287,7 @@ class RestifyApiGenerate {
 
             // 6) add parameters (queryParams and pathParams).
             operationObj.parameters = [];
+
             for (const paramKey in spec.validationObjs?.pathParams) {
                 const paramKeyData = spec.validationObjs.pathParams[paramKey];
 
